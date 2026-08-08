@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Binance P2P P&amp;L Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline-variant": "#45474b",
+                      "on-secondary-fixed-variant": "#5a4300",
+                      "on-primary-fixed-variant": "#43474d",
+                      "surface-tint": "#c3c6ce",
+                      "secondary-fixed-dim": "#f6be16",
+                      "surface-container-high": "#252a31",
+                      "surface-container-low": "#171c22",
+                      "on-tertiary-fixed-variant": "#005233",
+                      "inverse-surface": "#dee3eb",
+                      "primary-fixed": "#e0e2ea",
+                      "on-secondary-container": "#5f4800",
+                      "surface-container-lowest": "#0a0f14",
+                      "tertiary": "#3ee09a",
+                      "on-background": "#dee3eb",
+                      "on-secondary-fixed": "#251a00",
+                      "on-primary-fixed": "#181c21",
+                      "error": "#ffb4ab",
+                      "on-tertiary-fixed": "#002112",
+                      "background": "#0f1419",
+                      "tertiary-fixed": "#62fdb4",
+                      "primary-container": "#0b0f14",
+                      "outline": "#8f9195",
+                      "on-primary": "#2d3136",
+                      "on-surface-variant": "#c5c6cb",
+                      "error-container": "#93000a",
+                      "primary-fixed-dim": "#c3c6ce",
+                      "on-primary-container": "#787c82",
+                      "on-surface": "#dee3eb",
+                      "surface-container-highest": "#30353c",
+                      "secondary-fixed": "#ffdf99",
+                      "on-error-container": "#ffdad6",
+                      "surface-container": "#1b2026",
+                      "surface": "#0f1419",
+                      "on-tertiary-container": "#008d5b",
+                      "on-error": "#690005",
+                      "secondary-container": "#eab400",
+                      "primary": "#c3c6ce",
+                      "tertiary-container": "#001208",
+                      "on-tertiary": "#003822",
+                      "tertiary-fixed-dim": "#3ee09a",
+                      "surface-variant": "#30353c",
+                      "on-secondary": "#3f2e00",
+                      "surface-bright": "#353a40",
+                      "inverse-on-surface": "#2c3137",
+                      "secondary": "#ffd162",
+                      "inverse-primary": "#5b5f65",
+                      "surface-dim": "#0f1419"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-md": "24px",
+                      "margin-lg": "40px",
+                      "unit": "4px",
+                      "container-max": "1440px",
+                      "gutter": "16px",
+                      "margin-sm": "12px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Space Grotesk"
+                      ],
+                      "data-sm": [
+                              "IBM Plex Mono"
+                      ],
+                      "headline-lg-mobile": [
+                              "Space Grotesk"
+                      ],
+                      "display-lg": [
+                              "Space Grotesk"
+                      ],
+                      "label-caps": [
+                              "IBM Plex Mono"
+                      ],
+                      "data-md": [
+                              "IBM Plex Mono"
+                      ],
+                      "data-lg": [
+                              "IBM Plex Mono"
+                      ],
+                      "headline-md": [
+                              "Space Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "data-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.08em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "data-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "data-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .glass-panel {
+            background: rgba(11, 15, 20, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid #3E4550;
+        }
+        
+        .container-panel {
+            background: #0B0F14;
+            border: 1px solid #2B3139;
+        }
+
+        /* Animations */
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+            opacity: 0;
+        }
+        
+        .boot-seq {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.3s; }
+        .stagger-3 { animation-delay: 0.5s; }
+        .stagger-4 { animation-delay: 0.7s; }
+        
+        @keyframes flashGreen {
+            0% { color: #3ee09a; text-shadow: 0 0 10px #3ee09a; }
+            100% { color: inherit; text-shadow: none; }
+        }
+        
+        @keyframes flashRed {
+            0% { color: #ffb4ab; text-shadow: 0 0 10px #ffb4ab; }
+            100% { color: inherit; text-shadow: none; }
+        }
+        
+        .flash-update-green { animation: flashGreen 0.8s ease-out; }
+        .flash-update-red { animation: flashRed 0.8s ease-out; }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0B0F14; }
+        ::-webkit-scrollbar-thumb { background: #2B3139; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #45474b; }
+
+        .terminal-hover:hover {
+            box-shadow: inset 0 0 10px rgba(255, 209, 98, 0.2);
+            border-color: #ffd162;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative font-data-md text-data-md">
+<!-- Background Shader -->
+<div class="fixed inset-0 z-[-1] pointer-events-none opacity-50">
+<iframe src="{{DATA:SCREEN:SCREEN_4}}" style="width: 100%; height: 100%; border: none;"></iframe>
+</div>
+<!-- Ticker Strip -->
+<div class="w-full bg-secondary text-primary-container font-label-caps text-label-caps py-1 overflow-hidden whitespace-nowrap border-b border-outline-variant z-50">
+<div class="animate-marquee tracking-widest font-bold" id="ticker-content">
+<span class="mx-8">&gt;&gt; SYSTEM READY</span>
+<span class="mx-8">//</span>
+<span class="mx-8">AWAITING DATA STREAM</span>
+<span class="mx-8">//</span>
+<span class="mx-8">ALL FIGURES INR</span>
+<span class="mx-8">//</span>
+<span class="mx-8">&gt;&gt; SYSTEM READY</span>
+<span class="mx-8">//</span>
+<span class="mx-8">AWAITING DATA STREAM</span>
+<span class="mx-8">//</span>
+<span class="mx-8">ALL FIGURES INR</span>
+</div>
+</div>
+<!-- Header (Shared Component: TopAppBar) -->
+<header class="w-full bg-background/80 backdrop-blur border-b border-outline-variant z-40 sticky top-0 boot-seq stagger-1">
+<div class="flex justify-between items-center h-16 px-margin-md max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<h1 class="font-headline-md text-headline-md font-bold text-secondary tracking-tighter uppercase font-mono">BINANCE P2P P&amp;L</h1>
+</div>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-secondary font-bold border-b-2 border-secondary pb-1 transition-colors duration-200" href="#">Dashboard</a>
+<a class="text-on-surface-variant font-medium hover:text-secondary transition-colors duration-200" href="#">Ledger</a>
+<a class="text-on-surface-variant font-medium hover:text-secondary transition-colors duration-200" href="#">Positions</a>
+<a class="text-on-surface-variant font-medium hover:text-secondary transition-colors duration-200" href="#">Orders</a>
+<a class="text-on-surface-variant font-medium hover:text-secondary transition-colors duration-200" href="#">Settings</a>
+</nav>
+<div class="flex items-center gap-4 text-secondary dark:text-secondary">
+<button class="hover:text-white transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A futuristic minimalist avatar placeholder featuring a glowing neon geometric shape on a dark grey background. High contrast, sharp edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNAZRr3igwIxyJYSQCYVh0hkNQe2BehlJ00DP513L1GNMu_94K842hiQGaYSC58BjL7W3c-Bf1ywICfx1T754jWZrlrYKd4GlZt0heDEYiEzl-Fs3Ivp4ur3yVXuCU4vM01fATV3JhWwitTuBTmaPH9wmouOwsQXxXfbVawrzbtXvCgi5HLl7WNtI2E-sKAD6k59h_3JYaOFq0hE42LtGcFOP80yt8Egja07lu3j-ADK5j92FrPLn-wg"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 max-w-container-max mx-auto w-full relative">
+<!-- Sidebar (Shared Component: SideNavBar) - Hidden on Mobile -->
+<aside class="hidden md:flex flex-col py-margin-sm space-y-2 bg-surface-container-low/80 backdrop-blur text-secondary dark:text-secondary fixed left-0 top-[88px] h-[calc(100vh-88px)] w-[280px] border-r border-outline-variant z-30 boot-seq stagger-2">
+<div class="px-4 py-4 mb-4 border-b border-outline-variant flex items-center gap-3">
+<div class="h-10 w-10 rounded bg-surface-container-highest border border-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">terminal</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-secondary leading-tight font-mono">Terminal</h2>
+<p class="font-data-sm text-data-sm text-tertiary">Session Active</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 bg-surface-container-highest text-secondary border-l-2 border-secondary px-4 py-3 font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined text-lg">trending_up</span> Live Ticker
+                </a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container hover:text-on-surface transition-all font-label-caps text-label-caps" href="#" style="transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);">
+<span class="material-symbols-outlined text-lg">language</span> Market Overview
+                </a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container hover:text-on-surface transition-all font-label-caps text-label-caps" href="#" style="transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);">
+<span class="material-symbols-outlined text-lg">security</span> Risk Manager
+                </a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container hover:text-on-surface transition-all font-label-caps text-label-caps" href="#" style="transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);">
+<span class="material-symbols-outlined text-lg">calculate</span> P&amp;L Calculator
+                </a>
+</nav>
+<div class="mt-auto px-4 py-4 border-t border-outline-variant">
+<button class="w-full py-2 bg-secondary text-primary-container font-label-caps text-label-caps hover:bg-white transition-colors flex justify-center items-center gap-2">
+                    Export Report <span class="material-symbols-outlined text-sm">download</span>
+</button>
+<div class="flex justify-between mt-4">
+<a class="text-on-surface-variant hover:text-secondary font-data-sm text-data-sm flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-sm">help</span> Support
+                    </a>
+<a class="text-on-surface-variant hover:text-error font-data-sm text-data-sm flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-sm">logout</span> Logout
+                    </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[280px] p-margin-md md:p-margin-lg space-y-gutter w-full font-mono">
+<!-- Upload Area -->
+<section class="glass-panel p-6 rounded-none boot-seq stagger-3 relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-px bg-secondary opacity-50"></div>
+<div class="border-2 border-dashed border-outline-variant hover:border-secondary transition-colors duration-300 p-8 flex flex-col items-center justify-center text-center cursor-pointer bg-surface-container-lowest terminal-hover">
+<span class="material-symbols-outlined text-display-lg text-outline-variant group-hover:text-secondary transition-colors mb-4" style="font-size: 48px;">upload_file</span>
+<h3 class="font-headline-md text-headline-md font-semibold text-white mb-2">Initialize Data Stream</h3>
+<p class="font-data-sm text-data-sm text-on-surface-variant mb-6 max-w-md">Upload your Binance P2P transaction history CSV to compute realized P&amp;L and generate ledger metrics.</p>
+<label class="relative inline-flex items-center justify-center px-6 py-2 bg-secondary text-primary-container font-label-caps text-label-caps cursor-pointer hover:bg-white transition-colors">
+                        SELECT CSV FILE
+                        <input accept=".csv" class="hidden" id="csvFileInput" type="file"/>
+</label>
+<p class="mt-4 text-data-sm text-outline-variant" id="fileNameDisplay">No file selected</p>
+</div>
+</section>
+<!-- Data Displays -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-gutter boot-seq stagger-4" id="dashboard-content">
+<!-- Summary Card -->
+<div class="container-panel p-6 lg:col-span-1 flex flex-col gap-4 terminal-hover transition-all">
+<div class="flex justify-between items-center border-b border-outline-variant pb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">NET P&amp;L (INR)</span>
+<span class="material-symbols-outlined text-sm text-outline-variant">monitoring</span>
+</div>
+<div class="flex-1 flex items-center justify-center py-8">
+<div class="font-display-lg text-display-lg text-outline-variant" id="net-pnl-display">--</div>
+</div>
+</div>
+<!-- Chart/Stats Placeholder -->
+<div class="container-panel p-6 lg:col-span-2 flex flex-col gap-4 relative min-h-[200px] terminal-hover transition-all">
+<div class="flex justify-between items-center border-b border-outline-variant pb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">VOLUME METRICS</span>
+<span class="material-symbols-outlined text-sm text-outline-variant">bar_chart</span>
+</div>
+<div class="flex-1 grid grid-cols-2 gap-4 pt-4">
+<div class="bg-surface-container-low p-4 border border-outline-variant hover:border-secondary transition-colors group">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-2 group-hover:text-secondary">TOTAL BUY VOL</span>
+<span class="font-data-lg text-data-lg text-outline-variant" id="total-buy-display">--</span>
+</div>
+<div class="bg-surface-container-low p-4 border border-outline-variant hover:border-secondary transition-colors group">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-2 group-hover:text-secondary">TOTAL SELL VOL</span>
+<span class="font-data-lg text-data-lg text-outline-variant" id="total-sell-display">--</span>
+</div>
+</div>
+</div>
+<!-- Net Position Cards (Dynamically Inserted) -->
+<div class="container-panel lg:col-span-3 mt-4 overflow-hidden flex flex-col hidden" id="positions-container">
+<div class="p-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-white font-mono">Net Position Per Asset</h3>
+</div>
+<div class="p-4 grid grid-cols-2 md:grid-cols-4 gap-4" id="positions-grid">
+<!-- Position Cards go here -->
+</div>
+</div>
+<!-- Ledger Table Container -->
+<div class="container-panel lg:col-span-3 mt-4 overflow-hidden flex flex-col terminal-hover transition-all">
+<div class="p-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-white font-mono">Transaction Ledger</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1 border border-outline-variant text-on-surface-variant font-label-caps text-label-caps hover:border-secondary hover:text-secondary transition-colors">FILTER</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant">
+<th class="p-4 font-normal">ASSET</th>
+<th class="p-4 font-normal">BUY #</th>
+<th class="p-4 font-normal">SELL #</th>
+<th class="p-4 font-normal text-right">BUY (INR)</th>
+<th class="p-4 font-normal text-right">SELL (INR)</th>
+<th class="p-4 font-normal text-right">BUY AMT</th>
+<th class="p-4 font-normal text-right">SELL AMT</th>
+<th class="p-4 font-normal text-right">P&amp;L</th>
+</tr>
+</thead>
+<tbody class="font-data-sm text-data-sm font-mono" id="ledger-body">
+<tr class="border-b border-outline-variant hover:bg-surface-container-high transition-colors">
+<td class="p-4 text-outline-variant text-center" colspan="8">Awaiting Data Stream...</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer (Shared Component) -->
+<footer class="w-full mt-auto bg-surface-container-lowest/90 backdrop-blur border-t border-outline-variant flex flex-col md:flex-row justify-between items-center px-margin-md py-margin-sm z-40 relative">
+<div class="font-label-caps text-label-caps text-on-surface-variant">
+            © 2024 BINANCE P2P P&amp;L TERMINAL | TRUSTED DEALER VERIFIED
+        </div>
+<div class="text-secondary font-label-caps text-label-caps mt-2 md:mt-0 bg-surface-container-low px-3 py-1 border border-secondary">
+            Made by Trusted dealer for bulk orders DM 9494542617
+        </div>
+<div class="flex gap-4 mt-2 md:mt-0 font-data-sm text-data-sm text-tertiary dark:text-tertiary">
+<a class="text-outline hover:text-secondary transition-opacity duration-300" href="#">Privacy Policy</a>
+<a class="text-outline hover:text-secondary transition-opacity duration-300" href="#">Terms of Service</a>
+<a class="text-outline hover:text-secondary transition-opacity duration-300" href="#">Security Audit</a>
+<a class="text-outline hover:text-secondary transition-opacity duration-300" href="#">Contact Support</a>
+</div>
+</footer>
+<!-- Script Block for Logic -->
+<script>
+    const fileInput = document.getElementById('csvFileInput');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const tickerContent = document.getElementById('ticker-content');
+    const positionsContainer = document.getElementById('positions-container');
+    const positionsGrid = document.getElementById('positions-grid');
+    const tbody = document.getElementById('ledger-body');
+
+    function findColumnIndex(headers, possibleNames){
+      for (let i=0;i<headers.length;i++){
+        const clean = headers[i].replace(/^"|"$/g,'').trim().toLowerCase();
+        for (let name of possibleNames){ if (clean === name.toLowerCase()) return i; }
+      }
+      return -1;
+    }
+    function cleanValue(str){ if(!str) return ''; return str.replace(/^"|"$/g,'').trim(); }
+    function parseNumber(str){
+      if(!str) return 0;
+      const cleaned = str.replace(/^"|"$/g,'').replace(/,/g,'').trim();
+      const num = parseFloat(cleaned);
+      return isNaN(num) ? 0 : num;
+    }
+    function fmtINR(n){
+      const sign = n < 0 ? '-' : '';
+      return sign + '₹' + Math.abs(n).toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+    function getAssetFromRow(cols, assetIdx, headers){
+      if (assetIdx !== -1 && cols[assetIdx]){
+        const val = cleanValue(cols[assetIdx]);
+        if (val) return val.toUpperCase();
+      }
+      for (let h of headers){
+        const low = h.toLowerCase();
+        if (low.includes('asset') || low.includes('crypto') || low.includes('symbol')){
+          const idx = headers.indexOf(h);
+          if (idx !== -1 && cols[idx]){
+            const val = cleanValue(cols[idx]);
+            if (val) return val.toUpperCase();
+          }
+        }
+      }
+      return 'UNKNOWN';
+    }
+
+    function processCSV(csvText){
+      const lines = csvText.split(/\r?\n/).filter(l => l.trim() !== '');
+      if (lines.length < 2) return;
+
+      const headerLine = lines[0];
+      const headers = headerLine.split(',').map(h => h.replace(/^"|"$/g,'').trim());
+
+      const typeIdx = findColumnIndex(headers, ['Trade Type','Type','Order Type']);
+      const statusIdx = findColumnIndex(headers, ['Status','Order Status']);
+      const fiatIdx = findColumnIndex(headers, ['Total Price','Total','Amount','Fiat Amount']);
+      const cryptoAmountIdx = findColumnIndex(headers, ['Quantity','Crypto Amount','Amount of Crypto']);
+      const assetIdx = findColumnIndex(headers, ['Asset','Crypto','Coin','Symbol','Currency']);
+
+      if (typeIdx === -1 || fiatIdx === -1 || cryptoAmountIdx === -1) return;
+
+      const assetMap = new Map();
+      let totalBuyFiat=0, totalSellFiat=0, buyOrdersCount=0, sellOrdersCount=0;
+
+      for (let i=1;i<lines.length;i++){
+        const line = lines[i];
+        const cols = line.split(',').map(c => c.trim());
+        if (cols.length < Math.max(typeIdx, statusIdx, fiatIdx, cryptoAmountIdx, assetIdx) + 1) continue;
+
+        let status = 'completed';
+        if (statusIdx !== -1 && cols[statusIdx]) status = cleanValue(cols[statusIdx]).toLowerCase();
+        if (status !== 'completed' && status !== 'success') continue;
+
+        let type = '';
+        if (typeIdx !== -1 && cols[typeIdx]) type = cleanValue(cols[typeIdx]).toLowerCase(); else continue;
+
+        const fiatValue = parseNumber(cols[fiatIdx]);
+        const cryptoValue = parseNumber(cols[cryptoAmountIdx]);
+
+        let asset = getAssetFromRow(cols, assetIdx, headers);
+        if (!asset || asset === 'UNKNOWN'){
+          const amountHeader = headers[cryptoAmountIdx] || '';
+          if (amountHeader.toUpperCase().includes('BTC')) asset = 'BTC';
+          else if (amountHeader.toUpperCase().includes('USDT')) asset = 'USDT';
+          else if (amountHeader.toUpperCase().includes('ETH')) asset = 'ETH';
+          else asset = 'OTHER';
+        }
+        asset = asset.toUpperCase();
+
+        if (!assetMap.has(asset)){
+          assetMap.set(asset, {buyFiat:0, sellFiat:0, buyAmount:0, sellAmount:0, countBuy:0, countSell:0});
+        }
+        const entry = assetMap.get(asset);
+
+        if (type.includes('buy')){
+          entry.buyFiat += fiatValue; entry.buyAmount += cryptoValue; entry.countBuy++;
+          totalBuyFiat += fiatValue; buyOrdersCount++;
+        } else if (type.includes('sell')){
+          entry.sellFiat += fiatValue; entry.sellAmount += cryptoValue; entry.countSell++;
+          totalSellFiat += fiatValue; sellOrdersCount++;
+        }
+      }
+
+      const sortedAssets = Array.from(assetMap.keys()).sort((a,b) => {
+        const aTotal = assetMap.get(a).buyFiat + assetMap.get(a).sellFiat;
+        const bTotal = assetMap.get(b).buyFiat + assetMap.get(b).sellFiat;
+        return bTotal - aTotal;
+      });
+
+      if (sortedAssets.length === 0) return;
+
+      const overallPnl = totalSellFiat - totalBuyFiat;
+      const isProfit = overallPnl >= 0;
+
+      // Update UI
+      const netPnlDisplay = document.getElementById('net-pnl-display');
+      netPnlDisplay.textContent = (isProfit ? '+' : '') + fmtINR(overallPnl);
+      netPnlDisplay.classList.remove('text-outline-variant');
+      if (isProfit) {
+          netPnlDisplay.classList.add('text-tertiary', 'flash-update-green');
+      } else {
+          netPnlDisplay.classList.add('text-error', 'flash-update-red');
+      }
+
+      const buyDisplay = document.getElementById('total-buy-display');
+      buyDisplay.textContent = fmtINR(totalBuyFiat);
+      buyDisplay.classList.remove('text-outline-variant');
+      buyDisplay.classList.add('text-white');
+
+      const sellDisplay = document.getElementById('total-sell-display');
+      sellDisplay.textContent = fmtINR(totalSellFiat);
+      sellDisplay.classList.remove('text-outline-variant');
+      sellDisplay.classList.add('text-white');
+
+      // Ticker Update
+      let tickerHtml = '';
+      const tickerItems = [
+        `>> SYSTEM READY // PARSED ${buyOrdersCount + sellOrdersCount} ORDERS`,
+        `// OVERALL P&L ${fmtINR(overallPnl)}`
+      ];
+      sortedAssets.slice(0,4).forEach(asset => {
+        const d = assetMap.get(asset);
+        tickerItems.push(`// ${asset} P&L ${fmtINR(d.sellFiat - d.buyFiat)}`);
+      });
+      const tickerStr = tickerItems.join(' ') + ' ' + tickerItems.join(' ');
+      tickerContent.innerHTML = `<span class="mx-8">${tickerStr}</span>`;
+
+      // Positions Grid
+      positionsContainer.classList.remove('hidden');
+      positionsGrid.innerHTML = '';
+      
+      tbody.innerHTML = '';
+
+      sortedAssets.forEach((asset, index) => {
+        const d = assetMap.get(asset);
+        const netAmount = d.buyAmount - d.sellAmount;
+        const netFiat = d.sellFiat - d.buyFiat;
+        const cls = netFiat >= 0 ? 'text-tertiary' : 'text-error';
+        const bgCls = netFiat >= 0 ? 'border-tertiary/30' : 'border-error/30';
+
+        // Position Card
+        positionsGrid.innerHTML += `
+          <div class="bg-surface-container border ${bgCls} p-4 rounded-sm flex flex-col gap-1 terminal-hover fade-in-up stagger-${(index%4)+1}">
+            <div class="flex justify-between items-center text-label-caps font-bold text-on-surface-variant">
+              <span>${asset}</span>
+              <span>${d.countBuy}B / ${d.countSell}S</span>
+            </div>
+            <div class="text-data-lg font-bold text-white mt-1">${netAmount.toFixed(4)} <span class="text-data-sm text-outline-variant">NET</span></div>
+            <div class="${cls} font-semibold text-data-md">${fmtINR(netFiat)}</div>
+          </div>
+        `;
+
+        // Ledger Row
+        const tr = document.createElement('tr');
+        tr.className = `border-b border-outline-variant hover:bg-surface-container-high transition-colors group fade-in-up stagger-${(index%4)+1}`;
+        tr.innerHTML = `
+          <td class="p-4 border-l-2 border-transparent group-hover:border-secondary font-bold text-white">${asset} <span class="text-[10px] bg-surface-container px-1 py-0.5 rounded text-outline-variant ml-1">${d.countBuy+d.countSell}</span></td>
+          <td class="p-4 text-on-surface-variant">${d.countBuy}</td>
+          <td class="p-4 text-on-surface-variant">${d.countSell}</td>
+          <td class="p-4 text-right text-on-surface">${fmtINR(d.buyFiat)}</td>
+          <td class="p-4 text-right text-on-surface">${fmtINR(d.sellFiat)}</td>
+          <td class="p-4 text-right text-on-surface-variant">${d.buyAmount.toFixed(4)}</td>
+          <td class="p-4 text-right text-on-surface-variant">${d.sellAmount.toFixed(4)}</td>
+          <td class="p-4 text-right ${cls} font-bold">${fmtINR(netFiat)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Total Row
+      const totalTr = document.createElement('tr');
+      totalTr.className = `border-t-2 border-outline-variant bg-surface-container-low`;
+      const finalCls = isProfit ? 'text-tertiary' : 'text-error';
+      totalTr.innerHTML = `
+          <td class="p-4 font-bold text-white">TOTAL</td>
+          <td class="p-4 text-white">${buyOrdersCount}</td>
+          <td class="p-4 text-white">${sellOrdersCount}</td>
+          <td class="p-4 text-right text-white font-bold">${fmtINR(totalBuyFiat)}</td>
+          <td class="p-4 text-right text-white font-bold">${fmtINR(totalSellFiat)}</td>
+          <td class="p-4 text-right text-outline-variant">-</td>
+          <td class="p-4 text-right text-outline-variant">-</td>
+          <td class="p-4 text-right ${finalCls} font-bold">${fmtINR(overallPnl)}</td>
+      `;
+      tbody.appendChild(totalTr);
+    }
+
+    fileInput.addEventListener('change', function(e){
+      const file = e.target.files[0];
+      if (!file){ fileNameDisplay.textContent = 'No file selected'; return; }
+      fileNameDisplay.textContent = 'Processing: ' + file.name;
+      
+      const reader = new FileReader();
+      reader.onload = function(ev){ processCSV(ev.target.result); };
+      reader.readAsText(file);
+    });
+</script>
+</body></html>
